@@ -17,7 +17,7 @@ int main ()
   char msg[100];		//mesajul primit de la client 
   char msgrasp[100]=" ";        //mesaj de raspuns pentru client
   int sd;			//descriptorul de socket
-  int multiply, interest, sum;  
+  int gm, price, cost;  
 
   /* crearea unui socket */
   if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
@@ -88,12 +88,12 @@ int main ()
       /*pregatim mesajul de raspuns */
       bzero(msgrasp,100);
       strcat(msgrasp,msg);
-	  
-	  interest = 2;
-	  sum = atoi(msg);
-	  multiply = sum * interest;
-      printf("[server]Multiplicat:%d\n",multiply);
-      sprintf(msgrasp, "%d", multiply);
+	
+	  cost = 256;
+	  price = atoi(msg);
+	  gm = price-cost;
+      printf("[server]Multiplicat:%d\n",gm);
+      sprintf(msgrasp, "%d", gm);
       /* returnam mesajul clientului */
       if (write (client, msgrasp, 100) <= 0)
 	{
