@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
 
   /* citirea mesajului */
   bzero (msg, 100);
-  printf ("[client]Introduceti un nume: ");
+  printf ("[client]Introduceti un pret: ");
   fflush (stdout);
   read (0, msg, 100);
   
@@ -75,5 +75,28 @@ int main (int argc, char *argv[])
   /* afisam mesajul primit */
   printf ("[client]Mesajul primit este: %s\n", msg);
 
+  /* part22222222222222222222222 */
+  bzero (msg, 100);
+  printf ("[client]Introduceti un cost: ");
+  fflush (stdout);
+  read (0, msg, 100);
+  
+  /* trimiterea mesajului la server */
+  if (write (sd, msg, 100) <= 0)
+    {
+      perror ("[client]Eroare la write() spre server.\n");
+      return errno;
+    }
+
+  /* citirea raspunsului dat de server 
+     (apel blocant pina cind serverul raspunde) */
+  if (read (sd, msg, 100) < 0)
+    {
+      perror ("[client]Eroare la read() de la server.\n");
+      return errno;
+    }
+  /* afisam mesajul primit */
+  printf ("[client]Mesajul primit este: %s\n", msg);
+  /* */
   close (sd);
 }
