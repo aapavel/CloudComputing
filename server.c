@@ -89,12 +89,9 @@ int main ()
       bzero(msgrasp,100);
       strcat(msgrasp,msg);
 	
-	  cost = 256;
 	  price = atoi(msg);
-	  gm = price-cost;
-      printf("[server]Multiplicat:%d\n",gm);
-      sprintf(msgrasp, "%d", gm);
-      /* returnam mesajul clientului */
+      printf("[server]Pret:%d\n",price);
+      sprintf(msgrasp, "%d", price);
       if (write (client, msgrasp, 100) <= 0)
 	{
 	  perror ("[server]Eroare la write() catre client.\n");
@@ -102,6 +99,32 @@ int main ()
 	}
       else
 	printf ("[server]Mesajul a fost trasmis cu succes.\n");
-    close (client);
+	/* while 2 */
+		  bzero (msg, 100);
+		  printf ("[server]Asteptam mesajul...\n");
+		  fflush (stdout);
+		  
+		  if (read (client, msg, 100) <= 0)
+		{
+		  perror ("[server]Eroare la read() de la client.\n");
+		  close (client);	
+		  continue;		
+		}
+		 printf ("[server]Mesajul a fost receptionat...%s\n", msg);
+
+		  bzero(msgrasp,100);
+		  strcat(msgrasp,msg);
+		  cost = atoi(msg);
+		  gm = price-cost;
+		  printf("[server]GM:%d\n",gm);
+		  sprintf(msgrasp, "%d", gm);
+		  /* returnam mesajul clientului */
+		  if (write (client, msgrasp, 100) <= 0)
+		{
+		  perror ("[server]Eroare la write() catre client.\n");
+		  continue;		/* continuam sa ascultam */
+		}
+	/* while */
+	close (client);
     }				/* while */
 }				
